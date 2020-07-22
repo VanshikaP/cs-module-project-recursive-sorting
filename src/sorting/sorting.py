@@ -42,7 +42,7 @@ def merge_sort(arr):
         part2 = merge_sort(arr[mid:])
         return merge(part1, part2)
 
-print(merge([0,1], [2,3,5]))
+
 
 # STRETCH: implement the recursive logic for merge sort in a way that doesn't 
 # utilize any extra memory
@@ -50,10 +50,30 @@ print(merge([0,1], [2,3,5]))
 # or data structures; it can only re-use the memory it was given as input
 def merge_in_place(arr, start, mid, end):
     # Your code here
+    start2 = mid
+    while start <= mid and start2 <= end:
+        if arr[start] <= arr[start2]:
+            start += 1
+        else:
+            index = start2
+            value = arr[start2]
+            while index is not start:
+                arr[index] = arr[index - 1]
+                index -= 1
+            arr[start] = value
+            start += 1
+            mid += 1
+            start2 += 1
     return arr
 
-
+print(merge_in_place([1,5,8,2,4], 0, 2, 4))
 def merge_sort_in_place(arr, l, r):
     # Your code here
-    return arr
+    if r - l < 1:
+        return arr
+    else:
+        m = (l + r) // 2
+        merge_sort_in_place(arr, l, m)
+        merge_sort_in_place(arr, m + 1, r)
+        return merge_in_place(arr, l, m+1, r)
 
